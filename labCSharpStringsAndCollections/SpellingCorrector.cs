@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace TextFileCorrector
 {
+
   public class SpellingCorrector
   {
     private Dictionary<string, List<string>> _errorWords;
@@ -13,9 +14,11 @@ namespace TextFileCorrector
       _errorWords = errorWords;
     }
 
-    public string Correct(string content, out int correctionsCount)
+    public CorrectionResult Correct(string content)
     {
+      int correctionsCount;
       correctionsCount = 0;
+
       string result;
       result = content;
 
@@ -29,22 +32,11 @@ namespace TextFileCorrector
       wordIndex = 0;
 
       string correctWord;
-      correctWord = null;
-
       List<string> wrongVariants;
-      wrongVariants = null;
-
       int variantIndex;
-      variantIndex = 0;
-
       string wrongWord;
-      wrongWord = null;
-
       string pattern;
-      pattern = null;
-
       string newResult;
-      newResult = null;
 
       bool wasReplaced;
       wasReplaced = false;
@@ -76,7 +68,10 @@ namespace TextFileCorrector
         ++wordIndex;
       }
 
-      return result;
+      CorrectionResult correctionResult;
+      correctionResult = new CorrectionResult(result, correctionsCount);
+
+      return correctionResult;
     }
   }
 }

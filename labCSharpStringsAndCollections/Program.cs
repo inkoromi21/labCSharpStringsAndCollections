@@ -48,7 +48,6 @@ namespace TextFileCorrector
       fileIndex = 0;
 
       string currentFilePath;
-      currentFilePath = null;
 
       while (fileIndex < filesCount)
       {
@@ -74,11 +73,14 @@ namespace TextFileCorrector
       SpellingCorrector spellingCorrector;
       spellingCorrector = new SpellingCorrector(errorWords);
 
-      int spellingCorrectionsCount;
-      spellingCorrectionsCount = 0;
+      CorrectionResult correctionResult;
+      correctionResult = spellingCorrector.Correct(content);
 
       string contentAfterSpelling;
-      contentAfterSpelling = spellingCorrector.Correct(content, out spellingCorrectionsCount);
+      contentAfterSpelling = correctionResult.GetCorrectedContent();
+
+      int spellingCorrectionsCount;
+      spellingCorrectionsCount = correctionResult.GetCorrectionsCount();
 
       PhoneNumberFormatter phoneFormatter;
       phoneFormatter = new PhoneNumberFormatter();
@@ -90,7 +92,6 @@ namespace TextFileCorrector
       hasChanges = (finalContent != originalContent);
 
       string backupPath;
-      backupPath = null;
 
       if (hasChanges)
       {
